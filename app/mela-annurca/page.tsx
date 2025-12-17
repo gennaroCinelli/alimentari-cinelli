@@ -19,10 +19,10 @@ export default function MelaAnnurcaPage() {
         </div>
 
         <motion.div 
-           initial={{ opacity: 0, y: 50 }}
-           animate={{ opacity: 1, y: 0 }}
-           transition={{ duration: 1 }}
-           className="relative z-10 text-center px-4 max-w-4xl"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="relative z-10 text-center px-4 max-w-4xl"
         >
           <span className="inline-block py-1 px-4 border border-red-500/50 rounded-full text-red-500 text-xs font-bold tracking-[0.4em] uppercase mb-6 bg-red-900/10 backdrop-blur-md">
             L'oro Rosso della Campania
@@ -52,9 +52,10 @@ export default function MelaAnnurcaPage() {
             </p>
           </div>
           <div className="h-[400px] bg-[#141414] rounded-2xl overflow-hidden border border-white/5 relative group shadow-2xl shadow-red-900/10">
+             {/* MODIFICA: Tolto grayscale, ora è sempre colorata */}
              <img 
-               src="/annurca-verde.jpg" // 2. FOTO MELA VERDE
-               className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" 
+               src="/annurca-verde.jpg" 
+               className="w-full h-full object-cover transition-all duration-700 hover:scale-105" 
                alt="Raccolta Mela Verde" 
                onError={(e) => { (e.target as HTMLImageElement).src = "/placeholder-food.jpg"; }}
              />
@@ -64,9 +65,10 @@ export default function MelaAnnurcaPage() {
         {/* Step 2: Melaio (Arrossamento) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-center mb-32 md:flex-row-reverse">
           <div className="order-2 md:order-1 h-[400px] bg-[#141414] rounded-2xl overflow-hidden border border-white/5 relative group shadow-2xl shadow-red-900/10">
+             {/* MODIFICA: Tolto grayscale, ora è sempre colorata */}
              <img 
-               src="/annurca-melaio.jpg" // 3. FOTO MELAIO (PAGLIA)
-               className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" 
+               src="/annurca-melaio.jpg" 
+               className="w-full h-full object-cover transition-all duration-700 hover:scale-105" 
                alt="Melaio Arrossamento" 
                onError={(e) => { (e.target as HTMLImageElement).src = "/placeholder-food.jpg"; }}
              />
@@ -93,13 +95,14 @@ export default function MelaAnnurcaPage() {
             </p>
           </div>
           <div className="h-[400px] bg-[#141414] rounded-2xl overflow-hidden border border-white/5 relative group shadow-2xl shadow-red-900/10 flex items-center justify-center">
+             {/* MODIFICA: Tolto grayscale, ora è sempre colorata */}
              <img 
-               src="/annurca-cassetta.jpg" // 4. FOTO CASSETTA
-               className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" 
+               src="/annurca-cassetta.jpg" 
+               className="w-full h-full object-cover transition-all duration-700 hover:scale-105" 
                alt="Cassette pronte" 
                onError={(e) => { (e.target as HTMLImageElement).src = "/placeholder-food.jpg"; }}
              />
-             <Package size={60} className="absolute text-white/50 group-hover:opacity-0 transition-opacity" />
+             <Package size={60} className="absolute text-white/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
         </div>
 
@@ -141,7 +144,7 @@ export default function MelaAnnurcaPage() {
       {/* --- SEZIONE FINALE (Senza Bottone) --- */}
       <section className="py-32 text-center px-4">
         <span className="text-orange-500 text-xs font-bold tracking-[0.3em] uppercase mb-4 block">
-             Eccellenza Certificata
+              Eccellenza Certificata
         </span>
         <h2 className="text-3xl md:text-5xl font-serif font-bold mb-4">
           Il sapore autentico della tradizione.

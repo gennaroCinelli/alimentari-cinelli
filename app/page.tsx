@@ -7,23 +7,27 @@ import Link from "next/link";
 // --- COMPONENTE HERO (Foto Negozio) ---
 function HeroSection() {
   return (
-    <section className="relative w-full h-[85vh] min-h-[600px] flex items-center justify-center overflow-hidden">
+    // CONTENITORE: Qui c'è la modifica per l'altezza responsive (50vh su cellulare, 85vh su PC)
+    <section className="relative w-full h-[50vh] md:h-[85vh] min-h-[400px] md:min-h-[600px] flex items-center justify-center overflow-hidden">
       
-      {/* 1. L'IMMAGINE DI SFONDO */}
+      {/* 1. L'IMMAGINE DI SFONDO (Codice originale ripristinato) */}
       <div className="absolute inset-0 z-0">
         <img 
           src="/negozio-esterno.jpg" 
-          className="w-full h-full object-cover scale-105"
+          className="w-full h-full object-cover" // Mantiene le proporzioni perfette
           alt="Esterno Alimentari Cinelli"
-          // --- MODIFICHE PER IL CARICAMENTO IMMEDIATO ---
-          loading="eager"        // Forza il download immediato
-          decoding="sync"        // Decodifica subito l'immagine
-          fetchPriority="high"   // Massima priorità per il browser
-          // ---------------------------------------------
+          
+          // --- RIPRISTINO TUE IMPOSTAZIONI ORIGINALI ---
+          loading="eager"        
+          decoding="sync"        
+          // @ts-ignore
+          fetchPriority="high"   
           onError={(e) => {
+            // Se non trova .jpg, prova .png (come nel tuo codice)
             const target = e.target as HTMLImageElement;
             target.src = "/negozio-esterno.png"; 
           }}
+          // ---------------------------------------------
         />
         {/* Velo scuro per leggere il testo */}
         <div className="absolute inset-0 bg-black/40 z-10"></div>
@@ -34,17 +38,17 @@ function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative z-20 text-center px-4 mt-20"
+          className="relative z-20 text-center px-4 mt-10 md:mt-20"
       >
-          <span className="text-orange-500 text-xs md:text-sm font-bold tracking-[0.3em] uppercase mb-6 block font-sans">
+          <span className="text-orange-500 text-xs md:text-sm font-bold tracking-[0.3em] uppercase mb-4 md:mb-6 block font-sans">
             Eccellenza Quotidiana
           </span>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white leading-tight drop-shadow-2xl">
+          <h1 className="text-4xl md:text-7xl lg:text-8xl font-serif font-bold text-white leading-tight drop-shadow-2xl">
             Dal produttore <br />
             <span className="italic font-light">direttamente a te.</span>
           </h1>
           {/* Puntini rossi */}
-          <div className="flex justify-center gap-2 mt-8">
+          <div className="flex justify-center gap-2 mt-6 md:mt-8">
              <span className="w-2 h-2 rounded-full bg-red-600"></span>
              <span className="w-2 h-2 rounded-full bg-red-600"></span>
              <span className="w-2 h-2 rounded-full bg-red-600"></span>
@@ -58,7 +62,7 @@ function HeroSection() {
 // --- PAGINA PRINCIPALE ---
 export default function Home() {
   
-  // --- FOTO SLIDER ---
+  // --- FOTO SLIDER (I nomi strani che mi hai mandato, tipo .jpg.jpeg) ---
   const fotoLocale = [
     "/locale1.jpg.jpeg", 
     "/locale2.jpg.jpeg", 
@@ -91,10 +95,10 @@ export default function Home() {
       <HeroSection />
       
       {/* SECONDA SEZIONE (CAROUSEL) */}
-      <section className="relative py-32 flex flex-col items-center justify-center z-10">
+      <section className="relative py-20 md:py-32 flex flex-col items-center justify-center z-10">
         
         {/* TESTO */}
-        <div className="text-center mb-20 px-4 max-w-3xl mx-auto">
+        <div className="text-center mb-10 md:mb-20 px-4 max-w-3xl mx-auto">
            <h2 className="text-3xl md:text-5xl font-serif font-bold mb-6">
              Il nostro locale
            </h2>
@@ -111,11 +115,11 @@ export default function Home() {
            </p>
         </div>
 
-        <div className="relative w-full max-w-6xl h-[350px] md:h-[500px] flex items-center justify-center perspective-1000">
+        <div className="relative w-full max-w-6xl h-[300px] md:h-[500px] flex items-center justify-center perspective-1000">
           
           {/* Foto Precedente */}
           <motion.div 
-            className="absolute left-4 md:left-20 w-[40%] md:w-[30%] h-[60%] rounded-2xl overflow-hidden opacity-30 grayscale brightness-50 z-10 blur-[1px]"
+            className="absolute left-2 md:left-20 w-[30%] md:w-[30%] h-[60%] rounded-2xl overflow-hidden opacity-30 grayscale brightness-50 z-10 blur-[1px]"
             animate={{ x: -50, scale: 0.8 }}
             transition={{ duration: 0.5 }}
           >
@@ -124,7 +128,7 @@ export default function Home() {
 
           {/* Foto Centrale (Principale) */}
           <motion.div 
-            className="absolute w-[85%] md:w-[55%] h-[80%] md:h-[100%] rounded-3xl overflow-hidden shadow-2xl shadow-orange-900/40 z-20 border border-white/10 cursor-pointer"
+            className="absolute w-[80%] md:w-[55%] h-[80%] md:h-[100%] rounded-3xl overflow-hidden shadow-2xl shadow-orange-900/40 z-20 border border-white/10 cursor-pointer"
             key={index}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
@@ -141,7 +145,7 @@ export default function Home() {
 
           {/* Foto Successiva */}
           <motion.div 
-            className="absolute right-4 md:right-20 w-[40%] md:w-[30%] h-[60%] rounded-2xl overflow-hidden opacity-30 grayscale brightness-50 z-10 blur-[1px]"
+            className="absolute right-2 md:right-20 w-[30%] md:w-[30%] h-[60%] rounded-2xl overflow-hidden opacity-30 grayscale brightness-50 z-10 blur-[1px]"
             animate={{ x: 50, scale: 0.8 }}
             transition={{ duration: 0.5 }}
           >
@@ -149,10 +153,10 @@ export default function Home() {
           </motion.div>
 
           {/* Pulsanti Frecce */}
-          <button onClick={prevStep} className="absolute left-4 md:left-10 z-30 p-2 md:p-3 bg-white/10 hover:bg-orange-500 rounded-full text-white transition-all backdrop-blur-md border border-white/10">
+          <button onClick={prevStep} className="absolute left-2 md:left-10 z-30 p-2 md:p-3 bg-white/10 hover:bg-orange-500 rounded-full text-white transition-all backdrop-blur-md border border-white/10">
             <ArrowLeft size={20} />
           </button>
-          <button onClick={nextStep} className="absolute right-4 md:right-10 z-30 p-2 md:p-3 bg-white/10 hover:bg-orange-500 rounded-full text-white transition-all backdrop-blur-md border border-white/10">
+          <button onClick={nextStep} className="absolute right-2 md:right-10 z-30 p-2 md:p-3 bg-white/10 hover:bg-orange-500 rounded-full text-white transition-all backdrop-blur-md border border-white/10">
             <ArrowRight size={20} />
           </button>
         </div>
