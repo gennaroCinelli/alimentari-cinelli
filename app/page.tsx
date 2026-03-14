@@ -1,8 +1,10 @@
 "use client";
 import { motion } from "framer-motion";
-import { Apple, Banana, Carrot, Grape, Beef, Egg, Wheat, ShoppingBasket, Fish, Milk, Coffee, Cookie } from "lucide-react";
+import Link from "next/link";
+// Ho importato nuove icone (Info, Phone, Star) per i nuovi bottoni!
+import { Apple, Banana, Carrot, Grape, Beef, Egg, Wheat, ShoppingBasket, Fish, Milk, Coffee, Cookie, Info, Phone, Star } from "lucide-react";
 
-// --- COMPONENTE MAGICO: La lettera che cola (Ora perfetta anche per Mobile e Tablet!) ---
+// --- COMPONENTE MAGICO: La lettera che cola ---
 const ParolaCheSiScioglie = ({ parola, arancione = false }: { parola: string, arancione?: boolean }) => {
   return (
     <span className="inline-flex flex-wrap justify-center px-1 pb-12 -mb-12" style={{ filter: "url(#gooey)" }}>
@@ -17,17 +19,12 @@ const ParolaCheSiScioglie = ({ parola, arancione = false }: { parola: string, ar
          return (
           <motion.span
             key={i}
-            // TRUCCO 1: All'apertura del sito parte da "sciolto" (active) e torna normale (rest)
-            // creando un bellissimo effetto iniziale di liquido che viene riassorbito.
             initial="active"
             animate="rest"
-            // TRUCCO 2: Si riattiva col passaggio del mouse (PC)
             whileHover="active"
-            // TRUCCO 3: Si riattiva quando tocchi lo schermo per scorrere (Telefono/iPad)
             whileTap="active"
             className="relative inline-block cursor-crosshair group px-[2px] md:px-[4px]"
           >
-            {/* LA LETTERA FISICA */}
             <motion.span 
               variants={{ 
                 rest: { y: 0, transition: { duration: 2.5, ease: "easeOut" } }, 
@@ -38,7 +35,6 @@ const ParolaCheSiScioglie = ({ parola, arancione = false }: { parola: string, ar
               {lettera}
             </motion.span>
 
-            {/* LE GOCCE */}
             {gocce.map((goccia, j) => (
               <motion.span
                 key={j}
@@ -61,7 +57,6 @@ const ParolaCheSiScioglie = ({ parola, arancione = false }: { parola: string, ar
 function HeroSection() {
   
   const iconeSfondo = [
-    // Bordo Sinistro
     { Icon: Apple, style: "top-[10%] left-[5%] rotate-[-15deg]", size: 50 },
     { Icon: Wheat, style: "top-[45%] left-[2%] rotate-[-30deg]", size: 70 },
     { Icon: Egg, style: "bottom-[15%] left-[10%] rotate-[-20deg]", size: 40 },
@@ -69,8 +64,6 @@ function HeroSection() {
     { Icon: Carrot, style: "bottom-[5%] left-[3%] rotate-[15deg]", size: 60 },
     { Icon: Wheat, style: "top-[2%] left-[15%] rotate-[45deg]", size: 50 },
     { Icon: Milk, style: "bottom-[2%] left-[20%] rotate-[15deg]", size: 40 },
-    
-    // Bordo Destro
     { Icon: Carrot, style: "top-[20%] right-[8%] rotate-[25deg]", size: 55 },
     { Icon: Grape, style: "bottom-[30%] right-[5%] rotate-[10deg]", size: 60 },
     { Icon: Banana, style: "top-[65%] right-[2%] rotate-[-10deg]", size: 65 },
@@ -78,38 +71,10 @@ function HeroSection() {
     { Icon: Beef, style: "bottom-[5%] right-[15%] rotate-[-35deg]", size: 55 },
     { Icon: Banana, style: "top-[2%] right-[15%] rotate-[-45deg]", size: 45 },
     { Icon: Coffee, style: "bottom-[40%] right-[2%] rotate-[10deg]", size: 45 },
-    
-    // Zona Alta
-    { Icon: Coffee, style: "top-[5%] left-[30%] rotate-[20deg]", size: 40 },
-    { Icon: Beef, style: "top-[15%] right-[25%] rotate-[5deg]", size: 45 },
-    { Icon: Banana, style: "top-[25%] left-[20%] rotate-[35deg]", size: 35 },
-    { Icon: ShoppingBasket, style: "top-[5%] left-[50%] rotate-[-10deg]", size: 45 },
-    { Icon: Cookie, style: "top-[8%] right-[40%] rotate-[-20deg]", size: 35 },
-    { Icon: Milk, style: "top-[15%] left-[45%] rotate-[10deg]", size: 40 },
-    { Icon: Beef, style: "top-[15%] right-[5%] rotate-[30deg]", size: 60 },
-
-    // Zona Bassa
-    { Icon: Cookie, style: "bottom-[5%] left-[35%] rotate-[-15deg]", size: 45 },
-    { Icon: Milk, style: "bottom-[45%] right-[15%] rotate-[-5deg]", size: 50 },
-    { Icon: Fish, style: "bottom-[25%] left-[25%] rotate-[-30deg]", size: 50 },
-    { Icon: Egg, style: "bottom-[20%] right-[40%] rotate-[25deg]", size: 40 },
-    { Icon: ShoppingBasket, style: "bottom-[2%] right-[20%] rotate-[-20deg]", size: 50 },
-    { Icon: Coffee, style: "bottom-[15%] left-[50%] rotate-[10deg]", size: 40 },
-
-    // Centro-Esterno
-    { Icon: Grape, style: "top-[28%] left-[35%] rotate-[-5deg]", size: 30 },
-    { Icon: Carrot, style: "top-[32%] right-[35%] rotate-[15deg]", size: 35 },
-    { Icon: Apple, style: "bottom-[35%] left-[40%] rotate-[25deg]", size: 30 },
-    { Icon: Fish, style: "bottom-[28%] right-[30%] rotate-[-15deg]", size: 35 },
-    { Icon: Egg, style: "top-[45%] left-[25%] rotate-[5deg]", size: 35 },
-    { Icon: Cookie, style: "top-[45%] right-[25%] rotate-[-5deg]", size: 35 },
-    { Icon: Grape, style: "top-[55%] left-[8%] rotate-[45deg]", size: 55 },
-    { Icon: Apple, style: "top-[35%] right-[18%] rotate-[40deg]", size: 45 },
-    { Icon: Wheat, style: "top-[55%] right-[25%] rotate-[-15deg]", size: 50 },
   ];
 
   return (
-    <section className="relative w-full min-h-[85vh] flex flex-col items-center justify-center overflow-hidden bg-[#0a0a0a] px-4">
+    <section className="relative w-full min-h-[90vh] flex flex-col items-center justify-center overflow-hidden bg-[#0a0a0a] px-4 pt-10 pb-20">
       
       <svg className="absolute w-0 h-0" aria-hidden="true">
         <defs>
@@ -129,7 +94,7 @@ function HeroSection() {
         ))}
       </div>
 
-      <div className="relative z-20 w-full max-w-5xl mx-auto flex flex-col items-center text-center">
+      <div className="relative z-20 w-full max-w-5xl mx-auto flex flex-col items-center text-center mt-10 md:mt-0">
           
           <motion.span 
             initial={{ opacity: 0, y: 20 }}
@@ -166,6 +131,82 @@ function HeroSection() {
             transition={{ duration: 0.8, delay: 0.5 }}
             className="w-16 md:w-24 h-1 bg-orange-500 mx-auto mt-10 md:mt-14 rounded-full shadow-[0_0_15px_rgba(249,115,22,0.8)]"
           ></motion.div>
+
+          {/* --------------------------------------------------------- */}
+          {/* MENU HOME "FIGO" (Griglia interattiva)                      */}
+          {/* --------------------------------------------------------- */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="w-full max-w-4xl mx-auto mt-12 md:mt-16 z-30 relative"
+          >
+            {/* Griglia 4 Bottoni Principali */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 px-2 md:px-0">
+              
+              <Link href="/chi-siamo" className="group flex flex-col items-center justify-center gap-3 bg-white/5 hover:bg-orange-500/10 border border-white/10 hover:border-orange-500 p-5 md:p-6 rounded-3xl transition-all duration-300 hover:-translate-y-1 shadow-lg backdrop-blur-sm">
+                <Info className="text-stone-400 group-hover:text-orange-500 transition-colors" size={26} />
+                <span className="text-[10px] md:text-xs font-bold tracking-widest uppercase text-stone-200 group-hover:text-white transition-colors">Chi Siamo</span>
+              </Link>
+
+              <Link href="/frutta-verdura" className="group flex flex-col items-center justify-center gap-3 bg-white/5 hover:bg-orange-500/10 border border-white/10 hover:border-orange-500 p-5 md:p-6 rounded-3xl transition-all duration-300 hover:-translate-y-1 shadow-lg backdrop-blur-sm">
+                <Carrot className="text-stone-400 group-hover:text-orange-500 transition-colors" size={26} />
+                <span className="text-[10px] md:text-xs font-bold tracking-widest uppercase text-stone-200 group-hover:text-white transition-colors text-center leading-tight">Frutta & Verdura</span>
+              </Link>
+
+              <Link href="/salumi" className="group flex flex-col items-center justify-center gap-3 bg-white/5 hover:bg-orange-500/10 border border-white/10 hover:border-orange-500 p-5 md:p-6 rounded-3xl transition-all duration-300 hover:-translate-y-1 shadow-lg backdrop-blur-sm">
+                <Beef className="text-stone-400 group-hover:text-orange-500 transition-colors" size={26} />
+                <span className="text-[10px] md:text-xs font-bold tracking-widest uppercase text-stone-200 group-hover:text-white transition-colors text-center leading-tight">Salumi & Formaggi</span>
+              </Link>
+
+              <Link href="/contatti" className="group flex flex-col items-center justify-center gap-3 bg-white/5 hover:bg-orange-500/10 border border-white/10 hover:border-orange-500 p-5 md:p-6 rounded-3xl transition-all duration-300 hover:-translate-y-1 shadow-lg backdrop-blur-sm">
+                <Phone className="text-stone-400 group-hover:text-orange-500 transition-colors" size={26} />
+                <span className="text-[10px] md:text-xs font-bold tracking-widest uppercase text-stone-200 group-hover:text-white transition-colors">Contatti</span>
+              </Link>
+
+            </div>
+
+            {/* Box Speciale "Prodotti Tipici" (Sostituisce il menu a tendina) */}
+            <div className="mt-6 md:mt-8 mx-2 md:mx-0 bg-white/5 border border-white/10 rounded-3xl p-6 md:p-8 backdrop-blur-sm relative overflow-hidden group hover:border-white/20 transition-all shadow-lg">
+              {/* Linea luminosa in alto al box */}
+              <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-orange-500/50 to-transparent"></div>
+              
+              <h3 className="text-stone-400 text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase mb-6 text-center flex items-center justify-center gap-2">
+                <Star size={14} className="text-orange-500"/> Le Nostre Eccellenze <Star size={14} className="text-orange-500"/>
+              </h3>
+              
+              {/* "Pillole" per ogni prodotto tipico */}
+              <div className="flex flex-wrap justify-center gap-3 md:gap-4">
+                
+                <Link href="/mela-annurca" className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-black/40 hover:bg-red-500/10 hover:border-red-500 transition-all text-[10px] md:text-xs font-bold uppercase tracking-wider group/link">
+                  <span className="w-2 h-2 rounded-full bg-red-500 group-hover/link:shadow-[0_0_10px_rgba(239,68,68,1)] transition-shadow"></span> 
+                  <span className="text-stone-300 group-hover/link:text-white transition-colors">Mela Annurca</span>
+                </Link>
+                
+                <Link href="/nfrennule" className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-black/40 hover:bg-yellow-500/10 hover:border-yellow-500 transition-all text-[10px] md:text-xs font-bold uppercase tracking-wider group/link">
+                  <span className="w-2 h-2 rounded-full bg-yellow-500 group-hover/link:shadow-[0_0_10px_rgba(234,179,8,1)] transition-shadow"></span> 
+                  <span className="text-stone-300 group-hover/link:text-white transition-colors">'Nfrennule</span>
+                </Link>
+                
+                <Link href="/pane" className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-black/40 hover:bg-amber-600/10 hover:border-amber-600 transition-all text-[10px] md:text-xs font-bold uppercase tracking-wider group/link">
+                  <span className="w-2 h-2 rounded-full bg-amber-600 group-hover/link:shadow-[0_0_10px_rgba(217,119,6,1)] transition-shadow"></span> 
+                  <span className="text-stone-300 group-hover/link:text-white transition-colors">Pane a Legna</span>
+                </Link>
+                
+                <Link href="/mozzarella" className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-black/40 hover:bg-blue-500/10 hover:border-blue-500 transition-all text-[10px] md:text-xs font-bold uppercase tracking-wider group/link">
+                  <span className="w-2 h-2 rounded-full bg-blue-500 group-hover/link:shadow-[0_0_10px_rgba(59,130,246,1)] transition-shadow"></span> 
+                  <span className="text-stone-300 group-hover/link:text-white transition-colors">Mozzarella</span>
+                </Link>
+                
+                <Link href="/pomodoro" className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-black/40 hover:bg-red-600/10 hover:border-red-600 transition-all text-[10px] md:text-xs font-bold uppercase tracking-wider group/link">
+                  <span className="w-2 h-2 rounded-full bg-red-600 group-hover/link:shadow-[0_0_10px_rgba(220,38,38,1)] transition-shadow"></span> 
+                  <span className="text-stone-300 group-hover/link:text-white transition-colors">Pomodoro Piennolo</span>
+                </Link>
+
+              </div>
+            </div>
+
+          </motion.div>
 
       </div>
     </section>
