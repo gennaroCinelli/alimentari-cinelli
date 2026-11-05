@@ -1,75 +1,64 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Cookie, X } from "lucide-react";
+import { Cookie } from "lucide-react";
 
 export default function CookieBanner() {
-  const [isVisible, setIsVisible] = useState(false);
+  const [visibile, setVisibile] = useState(false);
 
   useEffect(() => {
-    // Controlla se l'utente ha già accettato i cookie
-    const consent = localStorage.getItem("cookieConsent");
-    if (!consent) {
-      // Aspetta 1 secondo prima di apparire per non essere aggressivo
-      const timer = setTimeout(() => setIsVisible(true), 1500);
-      return () => clearTimeout(timer);
+    if (!localStorage.getItem("cinelli-cookie")) {
+      const t = setTimeout(() => setVisibile(true), 2000);
+      return () => clearTimeout(t);
     }
   }, []);
 
-  const accettaCookie = () => {
-    localStorage.setItem("cookieConsent", "true");
-    setIsVisible(false);
+  const scegli = (scelta: string) => {
+    localStorage.setItem("cinelli-cookie", scelta);
+    setVisibile(false);
   };
 
   return (
     <AnimatePresence>
-      {isVisible && (
+      {visibile && (
         <motion.div
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 100, opacity: 0 }}
-          transition={{ duration: 0.5 }}
-          className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-[400px] z-[9999]"
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 60 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          role="dialog"
+          aria-label="Informativa cookie"
+          className="fixed bottom-28 left-4 right-4 z-[140] rounded-3xl border-2 border-line bg-elev p-7 shadow-2xl sm:bottom-5 sm:left-5 sm:right-auto sm:max-w-sm"
         >
-          <div className="bg-[#141414] border border-white/10 rounded-2xl p-6 shadow-2xl backdrop-blur-xl relative">
-            
-            {/* Tasto Chiudi (X) */}
-            <button 
-              onClick={() => setIsVisible(false)}
-              className="absolute top-4 right-4 text-stone-500 hover:text-white transition-colors"
+          <div className="flex items-start gap-4">
+            <span
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent/15 text-accent"
+              aria-hidden="true"
             >
-              <X size={16} />
-            </button>
-
-            <div className="flex items-start gap-4">
-              <div className="bg-orange-500/10 p-3 rounded-full text-orange-500 shrink-0">
-                <Cookie size={24} />
-              </div>
-              
-              <div>
-                <h4 className="font-serif font-bold text-white mb-2">Utilizzo dei Cookie</h4>
-                <p className="text-stone-400 text-xs leading-relaxed mb-4">
-                  Utilizziamo i cookie per migliorare la tua esperienza e per le funzionalità come la mappa e i social. 
-                  Continuando a navigare, accetti il loro utilizzo.
-                </p>
-                
-                <div className="flex gap-3">
-                  <button 
-                    onClick={accettaCookie}
-                    className="bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold py-2 px-6 rounded-full transition-all"
-                  >
-                    ACCETTA
-                  </button>
-                  <button 
-                    onClick={() => setIsVisible(false)}
-                    className="text-stone-400 hover:text-white text-xs font-bold py-2 px-2 transition-colors underline decoration-stone-600 underline-offset-4"
-                  >
-                    Chiudi
-                  </button>
-                </div>
+              <Cookie size={22} />
+            </span>
+            <div>
+              <h3 className="text-lg font-bold">Un momento 🍪</h3>
+              <p className="mt-2 text-base leading-relaxed text-mute">
+                Usiamo solo cookie tecnici per ricordare le tue preferenze.
+                Nessun tracciamento, promesso.
+              </p>
+              <div className="mt-5 flex flex-wrap gap-3">
+                <button
+                  onClick={() => scegli("accettati")}
+                  className="min-h-12 rounded-2xl bg-accent px-7 py-2.5 text-sm font-bold uppercase tracking-wide text-white transition-colors hover:bg-accent-deep"
+                >
+                  Va bene
+                </button>
+                <button
+                  onClick={() => scegli("rifiutati")}
+                  className="min-h-12 rounded-2xl border-2 border-line px-7 py-2.5 text-sm font-bold uppercase tracking-wide text-ink transition-colors hover:border-accent"
+                >
+                  No grazie
+                </button>
               </div>
             </div>
-
           </div>
         </motion.div>
       )}
