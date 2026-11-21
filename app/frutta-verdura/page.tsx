@@ -103,6 +103,20 @@ export default function FruttaVerduraPage() {
 
   const lista = useMemo(() => {
     const q = ricerca.trim().toLowerCase();
+    // Ricerca "indulgente", parola per parola: "mele annurca" trova
+    // "Mela Annurca", "limone" trova "Limoni". Ogni parola della
+    // ricerca deve comparire nel testo, anche senza l'ultima lettera
+    // (così singolari e plurali si equivalgono).
+    const corrisponde = (testo: string): boolean => {
+      if (!q) return true;
+      const t = testo.toLowerCase();
+      const parole = q.split(/\s+/).filter(Boolean);
+      return parole.every((parola) => {
+        if (t.includes(parola)) return true;
+        const stem = parola.length >= 4 ? parola.slice(0, -1) : parola;
+        return t.includes(stem);
+      });
+    };
     return PRODOTTI.filter((p) => {
       const passaFiltro =
         filtro === "tutti"
@@ -111,10 +125,9 @@ export default function FruttaVerduraPage() {
             ? !!p.isSpecial
             : p.tipo === filtro;
       const passaRicerca =
-        !q ||
-        p.nome.toLowerCase().includes(q) ||
-        p.category.toLowerCase().includes(q) ||
-        p.descrizione.toLowerCase().includes(q);
+        corrisponde(p.nome) ||
+        corrisponde(p.category) ||
+        corrisponde(p.descrizione);
       return passaFiltro && passaRicerca;
     });
   }, [filtro, ricerca]);
